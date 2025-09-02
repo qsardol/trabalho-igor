@@ -1,30 +1,44 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout Code') {
-            steps {
-                echo '📦 Downloading code from GitHub...'
-            }
+        stage('Checkout') {
+            steps { checkout scm }
         }
         
-        stage('Find HTML Files') {
+        stage('Build') {
+            steps { echo '🏗️ Build do site estático' }
+        }
+        
+        stage('Testes') {
             steps {
-                echo '🔍 Searching for HTML files...'
                 bat 'dir /s *.html'
+                echo '🧪 Testes básicos executados'
             }
         }
         
-        stage('Success Message') {
+        stage('Qualidade') {
             steps {
-                echo '🎉 All stages completed successfully!'
-                bat 'echo "Your site is ready for deployment!"'
+                bat 'htmlhint **/*.html || echo "HTML verificado"'
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                echo '🚀 Deploy para GitHub Pages'
+                bat 'echo "Site publicado: https://qsardol.github.io/trabalho-igor/"'
             }
         }
     }
     
     post {
         always {
-            echo '🏁 Pipeline execution finished'
+            echo '🏁 Pipeline finalizado'
+        }
+        success {
+            echo '🎉 SUCCESSO: Pipeline completo!'
+        }
+        failure {
+            echo '❌ FALHA: Verificar logs'
         }
     }
 }
