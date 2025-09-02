@@ -7,10 +7,10 @@ pipeline {
             }
         }
         
-        stage('List Files') {
+        stage('Find HTML Files') {
             steps {
-                echo '📁 Listing HTML files...'
-                bat 'dir *.html'
+                echo '🔍 Searching for HTML files...'
+                bat 'dir /s *.html'
             }
         }
         
