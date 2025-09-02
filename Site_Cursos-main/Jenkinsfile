@@ -1,46 +1,11 @@
 pipeline {
     agent any
-
     stages {
-        stage('Clonar repositório') {
+        stage('Teste Windows') {
             steps {
-                echo 'Clonando o repositório...'
+                bat 'echo "✅ Pipeline funcionando!"'
+                bat 'dir'
             }
-        }
-
-        stage('Verificar HTML') {
-            steps {
-                echo 'Verificando qualidade do HTML...'
-                sh '''
-                    # Instala e executa htmlhint para verificar HTML
-                    npm install -g htmlhint || true
-                    htmlhint "src/**/*.html" || echo "HTML verification completed"
-                '''
-            }
-        }
-
-        stage('Deploy para GitHub Pages') {
-            steps {
-                echo 'Fazendo deploy para GitHub Pages...'
-                sh '''
-                    # Configura git
-                    git config --global user.email "you@example.com"
-                    git config --global user.name "Jenkins"
-                    
-                    # Faz deploy (exemplo simplificado)
-                    # Você precisará configurar credenciais do GitHub no Jenkins
-                    echo "Deploy simulation - your site would be published here"
-                '''
-            }
-        }
-    }
-
-    post {
-        always {
-            echo 'Pipeline concluído!'
-        }
-        failure {
-            echo 'Pipeline falhou! Verifique os logs.'
         }
     }
 }
