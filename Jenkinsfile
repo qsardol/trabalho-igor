@@ -1,30 +1,30 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                echo '📦 Baixando código...'
+                echo '📦 Downloading code from GitHub...'
             }
         }
         
-        stage('Validar HTML') {
+        stage('List Files') {
             steps {
-                echo '🔍 Verificando arquivos HTML...'
+                echo '📁 Listing HTML files...'
                 bat 'dir *.html'
             }
         }
         
-        stage('Deploy Simulado') {
+        stage('Success Message') {
             steps {
-                echo '🚀 Preparando para deploy...'
-                bat 'echo "Site pronto para ser publicado!"'
+                echo '🎉 All stages completed successfully!'
+                bat 'echo "Your site is ready for deployment!"'
             }
         }
     }
     
     post {
-        success {
-            echo '🎉 Pipeline executado com sucesso!'
+        always {
+            echo '🏁 Pipeline execution finished'
         }
     }
 }
