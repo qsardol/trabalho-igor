@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clonar repositório') {
+            steps {
+                git branch: 'main', url: 'https://github.com/seuuser/meu-site.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Construindo o projeto (HTML/CSS estático, nada para compilar)'
+            }
+        }
+
+        stage('Testes') {
+            steps {
+                echo 'Rodando testes automatizados...'
+                sh 'echo "Testes fictícios ok!"'
+                // Exemplo: python3 tests/teste_basico.py
+            }
+        }
+
+        stage('Qualidade do Código') {
+            steps {
+                echo 'Rodando análise de qualidade...'
+                sh 'npx htmlhint "src/**/*.html" || true'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Fazendo deploy do site...'
+                // Aqui você pode:
+                // 1. Copiar os arquivos para um servidor Apache/Nginx
+                // 2. Usar Docker
+                // 3. Publicar em GitHub Pages
+            }
+        }
+    }
+
+    post {
+        failure {
+            mail to: 'seuemail@dominio.com',
+                 subject: "Pipeline falhou!",
+                 body: "O pipeline falhou. Verifique no Jenkins."
+        }
+    }
+}
